@@ -1,0 +1,47 @@
+1. Talaba sayohatini boshqarish
+
+Talabaning to‘liq hayotiy tsiklini kuzatish: qabul -> o‘qish -> ishga joylashish.
+Davomat tarixini qayd etish.
+Faol/noaktiv holatni sabablari bilan kuzatish (Muzlatilgan, O‘tkazilgan).
+Ishga joylashishni kuzatish (ish qidirish, taklifnoma yuklash, ishga joylashish tasdiqlash).  Toliq aftamatlashmagan xolda lekin
+
+
+2. Uy vazifasini avtomatlashtirish
+
+Talabalar uy vazifasini ERP tizimi orqali topshiradi (GitHub API). AI ulab qilsa boladi
+Gemini AI orqali avtomatik tekshirish va baholash. -> junior la qila ololmaydi
+Uy vazifasi ballari avtomatik ravishda talaba profiliga saqlanadi. -> Serverda malumot kopayadi va ogirlik tushadi maslaxat bermayman (server olinsa boladi kattaroq)
+Uy vazifasi topshirish muddatlari eslatmalar bilan.  Celery
+
+
+3. Demo loyiha avtomatlashtirishi
+
+Har bir kurs oxirida avtomatik demo loyiha topshiriqlari (SQL, Python, Power BI). -> Sql Python qilsa boladi. BI muommo
+Talabalar demo loyihalarni ERP tizimi orqali topshiradi. -> boladi shu server ishlashi uchun kataroq server kerak
+Demo loyiha yakunlanishini kuzatish.
+
+
+4. Talaba ma'lumotlarini boshqarish
+
+Shaxsiy ma'lumotlar: Ism, telefon, email, Telegram foydalanuvchi nomi, GitHub havolasi.
+Akademik ma'lumotlar: Oraliq/yakuniy imtihon ballari, uy vazifasi ballari, demo loyiha holati.
+Til ko‘nikmalari: Ingliz, Rus, boshqa tillar.
+Shartnoma tafsilotlari: Boshlanish sanasi, kutilgan tugash sanasi, haqiqiy chiqish sanasi, shartnoma raqami.
+Holat: Faol, Muzlatilgan, O‘tkazilgan, Chiqib ketgan, Ishga joylashgan.
+To‘lov holati: To‘langan, To‘lanmagan, Qarzdor.
+
+
+
+5. Talaba moliyasini boshqarish
+
+Talaba to‘lovlari tarixini kuzatish.
+Qarzdor talabalarni avtomatik belgilash (Moliya sahifasida qizil rangda ta'kidlash).
+Qarz haqida avtomatik eslatmalar yuborish.
+Bir necha to‘lov o‘tkazib yuborilganda talabalarni avtomatik muzlatish.
+
+
+6. Talaba shaxsiy sahifasi
+
+Talaba haqidagi barcha ma'lumotlarni ko‘rish mumkin bo‘lgan shaxsiy sahifa.
+Eslatma: Agar siz maxsus terminologiya yoki boshqa dialektga moslashtirishni xohlasangiz, iltimos, aniqlik kiriting!
+

@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     # my package
     'users.apps.UsersConfig',
     # third party package
+    'rest_framework',
+    'drf_spectacular',
 
 ]
 
@@ -54,6 +56,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'root.wsgi.application'
+AUTH_USER_MODEL = 'users.User'
 
 DATABASES = {
     'default': {
@@ -85,6 +88,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# todo DRF settings
+from root.drf_settings import *
