@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     # third party package
     'rest_framework',
     'drf_spectacular',
+    'rest_framework_simplejwt',
 
 ]
 
