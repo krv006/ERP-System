@@ -1,6 +1,10 @@
+import os
+import sys
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
 
 SECRET_KEY = 'django-insecure-mj16p@gotn-_54=s8y3==)4=f*jz$_@6sdf--p5jyjxtt25mh)'
 
@@ -16,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # my package
-    'apps'
+    'users.apps.UsersConfig',
     # third party package
 
 ]
