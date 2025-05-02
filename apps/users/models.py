@@ -5,6 +5,30 @@ from users.managers import CustomUserManager
 
 
 class User(AbstractUser):
+    ROLE_CHOICES = [
+        ('superadmin', 'SuperAdmin'),
+        ('admin', 'Admin'),
+        ('manager', 'Manager'),
+        ('supervisor', 'Supervisor'),
+        ('coordinator', 'Coordinator'),
+        ('operator', 'Operator'),
+        ('reception', 'Reception'),
+        ('teacher', 'Teacher'),
+        ('assistant_teacher', 'Assistant Teacher'),
+        ('student', 'Student'),
+        ('parent', 'Parent'),
+        ('marketing', 'Marketing'),
+        ('content_creator', 'Content Creator'),
+        ('designer', 'Designer'),
+        ('seo_specialist', 'SEO Specialist'),
+        ('accountant', 'Accountant'),
+        ('hr', 'HR'),
+        ('it_support', 'IT Support'),
+        ('security', 'Security'),
+        ('dev', 'Developer'),
+        ('intern', 'Intern'),
+    ]
+    role = CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     username = CharField(max_length=150, unique=True)
     first_name = CharField(max_length=150, blank=True)
     last_name = CharField(max_length=150, blank=True)

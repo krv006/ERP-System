@@ -50,3 +50,10 @@ class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+
+class UserRoleUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = 'role',
