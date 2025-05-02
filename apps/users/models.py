@@ -29,7 +29,7 @@ class User(AbstractUser):
         ('intern', 'Intern'),
     ]
     role = CharField(max_length=20, choices=ROLE_CHOICES, default='student')
-    username = CharField(max_length=150, unique=True)
+
     first_name = CharField(max_length=150, blank=True)
     last_name = CharField(max_length=150, blank=True)
 
@@ -37,7 +37,7 @@ class User(AbstractUser):
     is_active = BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username']  # `username`ni emailga o'zgartirish
 
     objects = CustomUserManager()
 
