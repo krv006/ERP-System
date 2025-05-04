@@ -13,6 +13,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -98,3 +99,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # todo DRF settings
 from root.drf_settings import *
+from root.jwt_settings import *
