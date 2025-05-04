@@ -1,13 +1,13 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, UpdateAPIView
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, UpdateAPIView, ListCreateAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.models import User
+from users.models import User, StudentJourney
 from users.serializers import RegisterUserModelSerializer, LoginUserModelSerializer, UserModelSerializer, \
-    UserRoleUpdateSerializer
+    UserRoleUpdateModelSerializer, StudentJourneyModelSerializer
 
 
 @extend_schema(tags=['user'])
@@ -45,6 +45,13 @@ class UserListAPIView(ListAPIView):
 @extend_schema(tags=['user'])
 class UserRoleUpdateAPIView(UpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserRoleUpdateSerializer
+    serializer_class = UserRoleUpdateModelSerializer
     permission_classes = AllowAny,  # faqat adminlarga ruxsat
     lookup_field = 'pk'  # default: 'pk', kerak bo‘lsa 'id' deb ham qo‘yish mumkin
+
+
+@extend_schema(tags=['user'])
+class StudentJourneyListCreateAPIView(ListCreateAPIView):
+    queryset = StudentJourney.objects.all()
+    serializer_class = StudentJourneyModelSerializer
+    permission_classes = AllowAny,

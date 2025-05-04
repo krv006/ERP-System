@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField, EmailField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from users.models import User
+from users.models import User, StudentJourney
 
 
 class RegisterUserModelSerializer(ModelSerializer):
@@ -52,8 +52,13 @@ class UserModelSerializer(ModelSerializer):
         fields = '__all__'
 
 
-
-class UserRoleUpdateSerializer(ModelSerializer):
+class UserRoleUpdateModelSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = 'role',
+
+
+class StudentJourneyModelSerializer(ModelSerializer):
+    class Meta:
+        model = StudentJourney
+        fields = '__all__'
