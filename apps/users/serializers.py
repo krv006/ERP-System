@@ -62,3 +62,8 @@ class StudentJourneyModelSerializer(ModelSerializer):
     class Meta:
         model = StudentJourney
         fields = '__all__'
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+        repr['user'] = UserModelSerializer(instance.user).data if instance.user else None
+        return repr
