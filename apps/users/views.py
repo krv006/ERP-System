@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User, StudentJourney
 from users.serializers import RegisterUserModelSerializer, LoginUserModelSerializer, UserModelSerializer, \
-    UserRoleUpdateModelSerializer, StudentJourneyModelSerializer
+    UserRoleUpdateModelSerializer, StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer
 
 
 @extend_schema(tags=['user'])
@@ -54,4 +54,11 @@ class UserRoleUpdateAPIView(UpdateAPIView):
 class StudentJourneyListCreateAPIView(ListCreateAPIView):
     queryset = StudentJourney.objects.all()
     serializer_class = StudentJourneyModelSerializer
+    permission_classes = AllowAny,
+
+
+@extend_schema(tags=['user'])
+class StudentJourneyInJobListAPIView(ListAPIView):
+    queryset = StudentJourney.objects.all()
+    serializer_class = StudentJourneyInJobModelSerializer
     permission_classes = AllowAny,

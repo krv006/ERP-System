@@ -67,3 +67,9 @@ class StudentJourneyModelSerializer(ModelSerializer):
         repr = super().to_representation(instance)
         repr['user'] = UserModelSerializer(instance.user).data if instance.user else None
         return repr
+
+
+class StudentJourneyInJobModelSerializer(ModelSerializer):
+    class Meta:
+        model = StudentJourney
+        fields = 'job_offer_accepted',
