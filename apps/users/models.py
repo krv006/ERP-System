@@ -109,3 +109,11 @@ class StudentJourney(Model):
         # Davomatni belgilash
         self.attendance.append({"date": date, "is_present": is_present})
         self.save()
+
+
+class Language(Model):
+    language = CharField(max_length=50)
+    language_grid = CharField(max_length=50, help_text='A1 or A2, B1 or B2 ...')
+
+    def __str__(self):
+        return f'{self.language}'
