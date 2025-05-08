@@ -73,3 +73,9 @@ class StudentJourneyInJobModelSerializer(ModelSerializer):
     class Meta:
         model = StudentJourney
         fields = 'job_offer_accepted',
+
+
+class StudentJourneyStatusUpdateModelSerializer(ModelSerializer):
+    class Meta:
+        model = StudentJourney
+        fields = 'status',

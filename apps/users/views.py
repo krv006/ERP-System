@@ -7,7 +7,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User, StudentJourney
 from users.serializers import RegisterUserModelSerializer, LoginUserModelSerializer, UserModelSerializer, \
-    UserRoleUpdateModelSerializer, StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer
+    UserRoleUpdateModelSerializer, StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer, \
+    StudentJourneyStatusUpdateModelSerializer
 
 
 @extend_schema(tags=['user'])
@@ -62,3 +63,11 @@ class StudentJourneyInJobListAPIView(ListAPIView):
     queryset = StudentJourney.objects.all()
     serializer_class = StudentJourneyInJobModelSerializer
     permission_classes = AllowAny,
+
+
+@extend_schema(tags=['user'])
+class StudentJourneyStatusUpdateAPIView(UpdateAPIView):
+    queryset = StudentJourney.objects.all()
+    serializer_class = StudentJourneyStatusUpdateModelSerializer
+    permission_classes = AllowAny,  # faqat adminlarga ruxsat
+    lookup_field = 'pk'  # default: 'pk', kerak bo‘lsa 'id' deb ham qo‘yish mumkin
