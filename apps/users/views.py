@@ -5,10 +5,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.models import User, StudentJourney
+from users.models import User, StudentJourney, Language
 from users.serializers import RegisterUserModelSerializer, LoginUserModelSerializer, UserModelSerializer, \
     UserRoleUpdateModelSerializer, StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer, \
-    StudentJourneyStatusUpdateModelSerializer
+    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer
 
 
 @extend_schema(tags=['user'])
@@ -71,3 +71,11 @@ class StudentJourneyStatusUpdateAPIView(UpdateAPIView):
     serializer_class = StudentJourneyStatusUpdateModelSerializer
     permission_classes = AllowAny,  # faqat adminlarga ruxsat
     lookup_field = 'pk'  # default: 'pk', kerak bo‘lsa 'id' deb ham qo‘yish mumkin
+
+
+
+@extend_schema(tags=['user'])
+class LanguageListCreateAPIView(ListCreateAPIView):
+    queryset = Language.objects.all()
+    serializer_class = LanguageModelSerializer
+    permission_classes = AllowAny,

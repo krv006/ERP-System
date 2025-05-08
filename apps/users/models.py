@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, EmailField, BooleanField, Model, JSONField, OneToOneField, CASCADE, \
-    DateTimeField, DateField, TextField
+    DateTimeField, DateField, TextField, ManyToOneRel, ForeignKey
 from django.utils import timezone
 
 from users.managers import CustomUserManager
@@ -114,6 +114,7 @@ class StudentJourney(Model):
 class Language(Model):
     language = CharField(max_length=50)
     language_grid = CharField(max_length=50, help_text='A1 or A2, B1 or B2 ...')
+    user = ForeignKey('users.User', CASCADE, related_name='language_user')
 
     def __str__(self):
         return f'{self.language}'

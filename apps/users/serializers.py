@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField, EmailField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from users.models import User, StudentJourney
+from users.models import User, StudentJourney, Language
 
 
 class RegisterUserModelSerializer(ModelSerializer):
@@ -55,7 +55,7 @@ class UserModelSerializer(ModelSerializer):
 class UserRoleUpdateModelSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = 'role',
+        fields = 'id', 'role',
 
 
 class StudentJourneyModelSerializer(ModelSerializer):
@@ -72,10 +72,21 @@ class StudentJourneyModelSerializer(ModelSerializer):
 class StudentJourneyInJobModelSerializer(ModelSerializer):
     class Meta:
         model = StudentJourney
-        fields = 'job_offer_accepted',
+        fields = 'id', 'job_offer_accepted',
 
 
 class StudentJourneyStatusUpdateModelSerializer(ModelSerializer):
     class Meta:
         model = StudentJourney
-        fields = 'status',
+        fields = 'id', 'status',
+
+
+class LanguageModelSerializer(ModelSerializer):
+    class Meta:
+        model = Language
+        fields = 'id', 'language', 'language_grid', 'user',
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+        repr['user'] = UserModelSerializer(instance.user).data if instance.user else None
+        return repr
