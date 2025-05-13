@@ -31,6 +31,13 @@ class StudentJourneyModelAdmin(ModelAdmin):
     search_fields = 'user', 'status', 'enrollment_date', 'employment_status',
     ordering = 'employment_status',
 
+    # fieldsets = (
+    #     (None, {'fields': ('user', 'status')}),
+    #     ('Status', {'fields': ('enrollment_date', 'employment_status')}),
+    # )
+    # todo admindan qoshimcha narsa chiqarish yani fieldsets mana shu ichida bergan narsalari alohida
+    # TODO LEKIN MASLAHAT BERMAYMAN
+
 
 @admin.register(Language)
 class LanguageModelAdmin(ModelAdmin):
