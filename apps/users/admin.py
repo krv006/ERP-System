@@ -26,12 +26,18 @@ class UserAdmin(BaseUserAdmin):
 
 @admin.register(StudentJourney)
 class StudentJourneyModelAdmin(ModelAdmin):
-    pass
+    list_display = 'user', 'status', 'enrollment_date', 'employment_status',
+    list_filter = 'status', 'enrollment_date', 'employment_status',
+    search_fields = 'user', 'status', 'enrollment_date', 'employment_status',
+    ordering = 'employment_status',
 
 
 @admin.register(Language)
 class LanguageModelAdmin(ModelAdmin):
-    pass
+    list_display = 'language', 'language_grid', 'user',
+    list_filter = 'language', 'language_grid', 'user',
+    search_fields = 'language', 'user',
+    ordering = 'language',
 
 
 admin.site.register(User, UserAdmin)
