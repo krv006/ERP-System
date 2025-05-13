@@ -58,6 +58,12 @@ class UserRoleUpdateModelSerializer(ModelSerializer):
         fields = 'id', 'role',
 
 
+class UserDetailModelSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = 'id', 'username', 'email', 'role', 'first_name', 'last_name',
+
+
 class StudentJourneyModelSerializer(ModelSerializer):
     class Meta:
         model = StudentJourney
@@ -65,7 +71,7 @@ class StudentJourneyModelSerializer(ModelSerializer):
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
-        repr['user'] = UserModelSerializer(instance.user).data if instance.user else None
+        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
         return repr
 
 
@@ -88,5 +94,5 @@ class LanguageModelSerializer(ModelSerializer):
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
-        repr['user'] = UserModelSerializer(instance.user).data if instance.user else None
+        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
         return repr

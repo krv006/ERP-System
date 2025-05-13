@@ -8,7 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User, StudentJourney, Language
 from users.serializers import RegisterUserModelSerializer, LoginUserModelSerializer, UserModelSerializer, \
     UserRoleUpdateModelSerializer, StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer, \
-    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer
+    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer, UserDetailModelSerializer
 
 
 @extend_schema(tags=['user'])
@@ -73,9 +73,15 @@ class StudentJourneyStatusUpdateAPIView(UpdateAPIView):
     lookup_field = 'pk'  # default: 'pk', kerak bo‘lsa 'id' deb ham qo‘yish mumkin
 
 
-
 @extend_schema(tags=['user'])
 class LanguageListCreateAPIView(ListCreateAPIView):
     queryset = Language.objects.all()
     serializer_class = LanguageModelSerializer
+    permission_classes = AllowAny,
+
+
+@extend_schema(tags=['user'])
+class UserDetailListAPIView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserDetailModelSerializer
     permission_classes = AllowAny,

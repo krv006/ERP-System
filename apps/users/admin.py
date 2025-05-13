@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from users.models import User, StudentJourney
+from users.models import User, StudentJourney, Language
 
 
 class UserAdmin(BaseUserAdmin):
@@ -24,9 +24,14 @@ class UserAdmin(BaseUserAdmin):
     ordering = 'email',
 
 
-admin.site.register(User, UserAdmin)
-
-
 @admin.register(StudentJourney)
 class StudentJourneyModelAdmin(ModelAdmin):
     pass
+
+
+@admin.register(Language)
+class LanguageModelAdmin(ModelAdmin):
+    pass
+
+
+admin.site.register(User, UserAdmin)
