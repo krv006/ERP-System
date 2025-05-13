@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField, EmailField
 from rest_framework.serializers import ModelSerializer, Serializer
 
-from users.models import User, StudentJourney, Language
+from users.models import User
 
 
 class RegisterUserModelSerializer(ModelSerializer):
@@ -11,7 +11,7 @@ class RegisterUserModelSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = 'id', 'email', 'password', 'confirm_password',
+        fields = 'id', 'email', 'first_name', 'last_name', 'password', 'confirm_password',
 
         extra_kwargs = {
             'password': {'write_only': True}
@@ -22,6 +22,8 @@ class RegisterUserModelSerializer(ModelSerializer):
         if confirm_password != attrs.get('password'):
             raise ValidationError('Passwords did not match!')
         attrs['password'] = make_password(confirm_password)
+        if not attrs.get('username'):
+            attrs['username'] = attrs.get('email')
         return attrs
 
 
@@ -62,37 +64,3 @@ class UserDetailModelSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = 'id', 'username', 'email', 'role', 'first_name', 'last_name',
-
-
-class StudentJourneyModelSerializer(ModelSerializer):
-    class Meta:
-        model = StudentJourney
-        fields = '__all__'
-
-    def to_representation(self, instance):
-        repr = super().to_representation(instance)
-        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
-        return repr
-
-
-class StudentJourneyInJobModelSerializer(ModelSerializer):
-    class Meta:
-        model = StudentJourney
-        fields = 'id', 'job_offer_accepted',
-
-
-class StudentJourneyStatusUpdateModelSerializer(ModelSerializer):
-    class Meta:
-        model = StudentJourney
-        fields = 'id', 'status',
-
-
-class LanguageModelSerializer(ModelSerializer):
-    class Meta:
-        model = Language
-        fields = 'id', 'language', 'language_grid', 'user',
-
-    def to_representation(self, instance):
-        repr = super().to_representation(instance)
-        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
-        return repr

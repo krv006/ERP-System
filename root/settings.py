@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my package
     'users.apps.UsersConfig',
+    'students.apps.StudentsConfig',
     # third party package
     'rest_framework',
     'drf_spectacular',
