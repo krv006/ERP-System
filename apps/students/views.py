@@ -2,9 +2,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.generics import ListAPIView, UpdateAPIView, ListCreateAPIView
 from rest_framework.permissions import AllowAny
 
-from students.models import StudentJourney, Language
+from students.models import StudentJourney, Language, Student
 from students.serializers import StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer, \
-    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer
+    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer, StudentModelSerializer
 
 
 @extend_schema(tags=['student'])
@@ -35,3 +35,9 @@ class LanguageListCreateAPIView(ListCreateAPIView):
     serializer_class = LanguageModelSerializer
     permission_classes = AllowAny,
 
+
+@extend_schema(tags=['student'])
+class StudentListCreateAPIView(ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentModelSerializer
+    permission_classes = AllowAny,

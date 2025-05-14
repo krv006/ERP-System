@@ -1,7 +1,18 @@
 from rest_framework.serializers import ModelSerializer
 
-from students.models import StudentJourney, Language
+from students.models import StudentJourney, Language, Student, Address
 from users.serializers import UserDetailModelSerializer
+
+
+class StudentModelSerializer(ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        repr = super().to_representation(instance)
+        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
+        return repr
 
 
 class StudentJourneyModelSerializer(ModelSerializer):
@@ -11,7 +22,7 @@ class StudentJourneyModelSerializer(ModelSerializer):
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
-        repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
+        repr['student'] = StudentModelSerializer(instance.user).data if instance.user else None
         return repr
 
 
@@ -30,9 +41,15 @@ class StudentJourneyStatusUpdateModelSerializer(ModelSerializer):
 class LanguageModelSerializer(ModelSerializer):
     class Meta:
         model = Language
-        fields = 'id', 'language', 'language_grid', 'user',
+        fields = 'id', 'language', 'language_level', 'user', 'certificate_name', 'certificate_score',
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
         repr['user'] = UserDetailModelSerializer(instance.user).data if instance.user else None
         return repr
+
+
+class AddressModelSerializer(ModelSerializer):
+    class Meta:
+        model = Address
+        fields = 'country', 'region', 'city', 'street', 'district', 'house_number', 'postal_code'

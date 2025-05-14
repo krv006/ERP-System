@@ -17,6 +17,7 @@ class Student(Model):
     address = ForeignKey('students.Address', CASCADE, related_name='students')
     phone = CharField(max_length=15, blank=True, null=True)
     emergency_contact = CharField(max_length=15, blank=True, null=True)
+    uni_name = CharField(max_length=100, blank=True, null=True)
     study_type = CharField(max_length=20, choices=[
         ('full_time', 'Kunduzgi'),
         ('part_time', 'Sirtqi'),
