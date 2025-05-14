@@ -6,11 +6,25 @@ from django.utils import timezone
 
 
 class Student(Model):
-    user = OneToOneField('users.User', CASCADE)
+    user = OneToOneField('users.User', CASCADE, related_name='student_profile')
     father_name = CharField(max_length=100)
-    address = TextField()
-    study_type = CharField(max_length=20, choices=[('full_time', 'Kunduzgi'), ('part_time', 'Sirtqi')])
-    contract_number = CharField(max_length=20)
+    mother_name = CharField(max_length=100, blank=True, null=True)
+    birth_place = CharField(max_length=100, blank=True, null=True)
+    nationality = CharField(max_length=50, blank=True, null=True, default="Uzbek")
+    passport_series = CharField(max_length=10, blank=True, null=True)
+    passport_number = CharField(max_length=20, blank=True, null=True)
+    inn = CharField(max_length=14, blank=True, null=True)
+    address = ForeignKey('students.Address', CASCADE, related_name='students')
+    phone = CharField(max_length=15, blank=True, null=True)
+    emergency_contact = CharField(max_length=15, blank=True, null=True)
+    study_type = CharField(max_length=20, choices=[
+        ('full_time', 'Kunduzgi'),
+        ('part_time', 'Sirtqi'),
+        ('evening', 'Kechki')
+    ])
+    contract_number = CharField(max_length=20, unique=True)
+    start_year = DateField(null=True, blank=True)
+    photo = CharField(max_length=255, blank=True, null=True)  # yoki ImageField
 
     def __str__(self):
         return self.user.full_name()
@@ -18,64 +32,61 @@ class Student(Model):
 
 class StudentJourney(Model):
     STATUS_CHOICES = [
-        ('admitted', 'Admitted'),  # Talaba qabul qilindi
-        ('studying', 'Studying'),  # Talaba o‘qishda
-        ('graduated', 'Graduated'),  # Talaba bitirdi
-        ('employed', 'Employed'),  # Talaba ishga joylashgan
-        ('frozen', 'Frozen'),  # Talaba muzlatilgan
-        ('dropped_out', 'Dropped Out'),  # Talaba o‘qishni tark etdi
+        ('admitted', 'Qabul qilindi'),
+        ('studying', 'O‘qishda'),
+        ('graduated', 'Bitirdi'),
+        ('employed', 'Ishga joylashgan'),
+        ('frozen', 'Muzlatilgan'),
+        ('dropped_out', 'Tark etdi'),
     ]
 
-    student = OneToOneField('students.Student', CASCADE)
+    student = OneToOneField('students.Student', CASCADE, related_name='journey')
     status = CharField(max_length=20, choices=STATUS_CHOICES, default='admitted')
-    enrollment_date = DateTimeField(default=timezone.now)  # Qabul qilingan sana
-    graduation_date = DateField(null=True, blank=True)  # Bitirish sanasi
-    employment_status = BooleanField(default=False)  # Ishga joylashgan yoki yo‘qligini ko‘rsatadi
-    frozen_reason = TextField(blank=True, null=True)  # Muzlatilgan bo‘lsa, sababi
-    dropout_reason = TextField(blank=True, null=True)  # Tark etish sababi
+    enrollment_date = DateTimeField(default=timezone.now)
+    graduation_date = DateField(null=True, blank=True)
+    employment_status = BooleanField(default=False)
+    frozen_reason = TextField(blank=True, null=True)
+    dropout_reason = TextField(blank=True, null=True)
 
-    # Davomat tarixini kuzatish
-    attendance = JSONField(default=list, blank=True)  # Davomat (ro‘yxat sifatida)
+    attendance = JSONField(default=list, blank=True)
+    job_search_status = BooleanField(default=False)
+    job_offer_received = BooleanField(default=False)
+    job_offer_accepted = BooleanField(default=False)
 
-    # Ishga joylashish jarayoni
-    job_search_status = BooleanField(default=False)  # Ish qidirish holati
-    job_offer_received = BooleanField(default=False)  # Ish taklifini olish holati
-    job_offer_accepted = BooleanField(default=False)  # Ishga joylashganligini tasdiqlash
+    internship_company = CharField(max_length=100, blank=True, null=True)
+    job_company = CharField(max_length=100, blank=True, null=True)
+    job_title = CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name} - Status: {self.get_status_display()}'
+        return f'{self.student.user.full_name()} - {self.get_status_display()}'
 
     def is_active(self):
         return self.status == 'studying'
 
-    def is_employed(self):
-        return self.status == 'employed'
-
-    def complete_employment(self):
-        self.status = 'employed'
-        self.employment_status = True
-        self.save()
-
-    def freeze(self, reason):
-        self.status = 'frozen'
-        self.frozen_reason = reason
-        self.save()
-
-    def drop_out(self, reason):
-        self.status = 'dropped_out'
-        self.dropout_reason = reason
-        self.save()
-
     def mark_attendance(self, date, is_present):
-        # Davomatni belgilash
-        self.attendance.append({"date": date, "is_present": is_present})
+        self.attendance.append({"date": str(date), "is_present": is_present})
         self.save()
 
 
 class Language(Model):
     language = CharField(max_length=50)
-    language_grid = CharField(max_length=50, help_text='A1 or A2, B1 or B2 ...')
-    user = ForeignKey('users.User', CASCADE, related_name='language_user')
+    language_level = CharField(max_length=10, help_text='A1, A2, B1, B2, C1, C2')
+    user = ForeignKey('users.User', CASCADE, related_name='languages')
+    certificate_name = CharField(max_length=100, blank=True, null=True)
+    certificate_score = CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.language}'
+        return f'{self.language} - {self.language_level}'
+
+
+class Address(Model):
+    country = CharField(max_length=100, default='Uzbekistan')
+    region = CharField(max_length=255)
+    city = CharField(max_length=255)
+    district = CharField(max_length=255, blank=True, null=True)
+    street = CharField(max_length=255, blank=True, null=True)
+    house_number = CharField(max_length=20, blank=True, null=True)
+    postal_code = CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.country}, {self.region}, {self.city}'
