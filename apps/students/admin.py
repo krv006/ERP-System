@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from students.models import StudentJourney, Language
+from students.models import StudentJourney, Language, Student
 
 
 @admin.register(StudentJourney)
@@ -25,3 +25,14 @@ class LanguageModelAdmin(ModelAdmin):
     list_filter = 'language', 'user',
     search_fields = 'language', 'user',
     ordering = 'language',
+
+
+@admin.register(Student)
+class StudentModelAdmin(ModelAdmin):
+    list_display = ('user', 'father_name', 'mother_name', 'birth_place', 'nationality', 'passport_series',
+                    'passport_number', 'inn', 'address', 'phone', 'emergency_contact', 'uni_name',
+                    'study_type', 'contract_number', 'photo')
+    list_filter = 'uni_name', 'nationality', 'birth_place', 'study_type',
+    search_fields = ('uni_name', 'nationality', 'birth_place', 'passport_series', 'passport_number',
+                     'inn', 'phone',)
+    ordering = 'inn',
