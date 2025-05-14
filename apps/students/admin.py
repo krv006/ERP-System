@@ -21,7 +21,7 @@ class StudentJourneyModelAdmin(ModelAdmin):
 
 @admin.register(Language)
 class LanguageModelAdmin(ModelAdmin):
-    list_display = 'language', 'language_grid', 'user',
-    list_filter = 'language', 'language_grid', 'user',
+    list_display = 'language', 'user',
+    list_filter = 'language', 'user',
     search_fields = 'language', 'user',
     ordering = 'language',
