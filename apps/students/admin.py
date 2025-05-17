@@ -30,9 +30,9 @@ class LanguageModelAdmin(ModelAdmin):
 @admin.register(Student)
 class StudentModelAdmin(ModelAdmin):
     list_display = ('user', 'father_name', 'mother_name', 'birth_place', 'nationality', 'passport_series',
-                    'passport_number', 'inn', 'address', 'phone', 'emergency_contact', 'uni_name',
-                    'study_type', 'contract_number', 'photo')
+                    'passport_number', 'inn', 'address', 'phone_number', 'parent_phone_number', 'emergency_contact',
+                    'uni_name', 'study_type', 'contract_number', 'photo')
     list_filter = 'uni_name', 'nationality', 'birth_place', 'study_type',
     search_fields = ('uni_name', 'nationality', 'birth_place', 'passport_series', 'passport_number',
-                     'inn', 'phone',)
+                     'inn', 'phone_number',)
     ordering = 'inn',

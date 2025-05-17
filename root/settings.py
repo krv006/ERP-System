@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     # third party package
     'rest_framework',
+    'django_filters',
     'drf_spectacular',
     'rest_framework_simplejwt',
     'silk',

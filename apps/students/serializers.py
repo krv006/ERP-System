@@ -41,7 +41,7 @@ class StudentJourneyStatusUpdateModelSerializer(ModelSerializer):
 class LanguageModelSerializer(ModelSerializer):
     class Meta:
         model = Language
-        fields = 'id', 'language', 'language_level', 'user', 'certificate_name', 'certificate_score',
+        fields = 'id', 'language', 'language_level', 'certificate_name', 'certificate_score', 'user',
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
@@ -53,3 +53,4 @@ class AddressModelSerializer(ModelSerializer):
     class Meta:
         model = Address
         fields = 'country', 'region', 'city', 'street', 'district', 'house_number', 'postal_code'
+

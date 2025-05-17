@@ -1,21 +1,21 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, BooleanField, Model, JSONField, OneToOneField, CASCADE, \
-    DateTimeField, DateField, TextField, ForeignKey
+    DateTimeField, DateField, TextField, ForeignKey, ImageField
 from django.db.models import Model
 from django.utils import timezone
 
 
 class Student(Model):
-    user = OneToOneField('users.User', CASCADE, related_name='student_profile')
     father_name = CharField(max_length=100)
     mother_name = CharField(max_length=100, blank=True, null=True)
+    parent_phone_number = CharField(max_length=55, blank=True, null=True)
     birth_place = CharField(max_length=100, blank=True, null=True)
     nationality = CharField(max_length=50, blank=True, null=True, default="Uzbek")
     passport_series = CharField(max_length=10, blank=True, null=True)
     passport_number = CharField(max_length=20, blank=True, null=True)
     inn = CharField(max_length=14, blank=True, null=True)
-    address = ForeignKey('students.Address', CASCADE, related_name='students')
-    phone = CharField(max_length=15, blank=True, null=True)
+    phone_number = CharField(max_length=55, blank=True, null=True)
+    telegram = CharField(max_length=100, blank=True, null=True)
     emergency_contact = CharField(max_length=15, blank=True, null=True)
     uni_name = CharField(max_length=100, blank=True, null=True)
     study_type = CharField(max_length=20, choices=[
@@ -25,7 +25,9 @@ class Student(Model):
     ])
     contract_number = CharField(max_length=20, unique=True)
     start_year = DateField(null=True, blank=True)
-    photo = CharField(max_length=255, blank=True, null=True)  # yoki ImageField
+    photo = ImageField(blank=True, null=True)
+    address = ForeignKey('students.Address', CASCADE, related_name='students')
+    user = OneToOneField('users.User', CASCADE, related_name='student_profile')
 
     def __str__(self):
         return self.user.full_name()
