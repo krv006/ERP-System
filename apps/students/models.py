@@ -58,11 +58,6 @@ class Student(Model):
     start_year = DateField(null=True, blank=True)
     expected_graduation_date = DateField(null=True, blank=True)
     actual_exit_date = DateField(null=True, blank=True)
-    payment_status = CharField(max_length=20, choices=[
-        ('paid', 'To‘langan'),
-        ('unpaid', 'To‘lanmagan'),
-        ('debt', 'Qarzdor')
-    ], default='unpaid')
 
     def __str__(self):
         return self.user.full_name()
@@ -133,3 +128,50 @@ class Language(Model):
 
     def __str__(self):
         return f'{self.language} - {self.language_level}'
+
+
+class PaymentPlan(Model):
+    name = CharField(max_length=50, choices=[
+        ('monthly', 'Har oy'),
+        ('6months', '6 oylik'),
+        ('12months', '1 yillik')
+    ])
+    base_amount = CharField(max_length=20)  # misol: 2400000
+
+    def __str__(self):
+        return f"{self.get_name_display()} - {self.base_amount} so‘m"
+
+
+# todo admin
+class PaymentDiscount(Model):
+    plan = OneToOneField(PaymentPlan, CASCADE, related_name='discount')
+    discount_percent = CharField(max_length=5)  # misol: 4 yoki 7
+    updated_at = DateField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.plan.name} - {self.discount_percent}% chegirma"
+
+    def get_discounted_amount(self):
+        return int(self.plan.base_amount) * (100 - int(self.discount_percent)) // 100
+
+
+class StudentPayment(Model):
+    student = ForeignKey('students.Student', CASCADE, related_name='payments')
+    plan = ForeignKey(PaymentPlan, CASCADE)
+    paid_amount = CharField(max_length=20)
+    due_date = DateField()
+    is_paid = BooleanField(default=False)
+    paid_at = DateField(null=True, blank=True)
+    payment_note = TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.student.user.full_name()} - {self.plan.name} - {self.paid_amount} - {'To‘langan' if self.is_paid else 'Qarzdor'}"
+
+    # @property
+    # def total_debt(self):
+    #     return sum(payment.paid_amount for payment in self.payments.filter(is_paid=False))
+
+    # todo views or serializer
+    # Student.objects.annotate(
+    #     total_debt=Sum(Case(When(payments__is_paid=False, then=F('payments__paid_amount')), default=0))
+    # )
