@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from students.models import StudentJourney, Language, Student
+from students.models import StudentJourney, Language, Student, StudentPayment, PaymentDiscount, PaymentPlan, Address
 
 
 @admin.register(StudentJourney)
@@ -36,3 +36,23 @@ class StudentModelAdmin(ModelAdmin):
     search_fields = ('uni_name', 'nationality', 'birth_place', 'passport_series', 'passport_number',
                      'inn', 'phone_number',)
     ordering = 'inn',
+
+
+@admin.register(PaymentPlan)
+class PaymentPlanModelAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(PaymentDiscount)
+class PaymentDiscountModelAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(StudentPayment)
+class StudentPaymentModelAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(Address)
+class AddressModelAdmin(ModelAdmin):
+    pass

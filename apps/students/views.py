@@ -2,9 +2,10 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.generics import ListAPIView, UpdateAPIView, ListCreateAPIView
 from rest_framework.permissions import AllowAny
 
-from students.models import StudentJourney, Language, Student
+from students.models import StudentJourney, Language, Student, PaymentPlan, PaymentDiscount, StudentPayment
 from students.serializers import StudentJourneyModelSerializer, StudentJourneyInJobModelSerializer, \
-    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer, StudentModelSerializer
+    StudentJourneyStatusUpdateModelSerializer, LanguageModelSerializer, StudentModelSerializer, \
+    PaymentPlanModelSerializer, PaymentDiscountModelSerializer, StudentPaymentModelSerializer
 
 
 @extend_schema(tags=['student'])
@@ -40,4 +41,26 @@ class LanguageListCreateAPIView(ListCreateAPIView):
 class StudentListCreateAPIView(ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentModelSerializer
+    permission_classes = AllowAny,
+
+
+@extend_schema(tags=['student'])
+class PaymentPlanListAPIView(ListAPIView):
+    queryset = PaymentPlan.objects.all()
+    serializer_class = PaymentPlanModelSerializer
+    permission_classes = AllowAny,
+
+
+@extend_schema(tags=['student'])
+class PaymentDiscountListAPIView(ListAPIView):
+    queryset = PaymentDiscount.objects.all()
+    serializer_class = PaymentDiscountModelSerializer
+    permission_classes = AllowAny,
+
+
+
+@extend_schema(tags=['student'])
+class StudentPaymentListAPIView(ListAPIView):
+    queryset = StudentPayment.objects.all()
+    serializer_class = StudentPaymentModelSerializer
     permission_classes = AllowAny,

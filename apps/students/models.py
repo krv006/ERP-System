@@ -144,7 +144,7 @@ class PaymentPlan(Model):
 
 # todo admin
 class PaymentDiscount(Model):
-    plan = OneToOneField(PaymentPlan, CASCADE, related_name='discount')
+    plan = OneToOneField('students.PaymentPlan', CASCADE, related_name='discount')
     discount_percent = CharField(max_length=5)  # misol: 4 yoki 7
     updated_at = DateField(auto_now=True)
 
