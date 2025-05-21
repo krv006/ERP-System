@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework_simplejwt',
     'silk',
+    # 'django_celery_results',
+    # 'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +101,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# CELERY_TIMEZONE = "Asia/Tashkent"
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+#
+# LOGIN_URL = 'login_page'
+# LOGOUT_REDIRECT_URL = 'login_page'
+# # LOGIN_REDIRECT_URL = 'product_list_page'
+#
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+#
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# # CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+# CELERY_RESULT_BACKEND = 'django-db'
+#
+# CELERY_CACHE_BACKEND = 'default'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
