@@ -53,19 +53,19 @@ class LanguageModelSerializer(ModelSerializer):
 class AddressModelSerializer(ModelSerializer):
     class Meta:
         model = Address
-        fields = 'country', 'region', 'city', 'street', 'district', 'house_number', 'postal_code'
+        fields = 'id', 'country', 'region', 'city', 'street', 'district', 'house_number', 'postal_code'
 
 
 class PaymentPlanModelSerializer(ModelSerializer):
     class Meta:
         model = PaymentPlan
-        fields = 'name', 'base_amount',
+        fields = 'id', 'name', 'base_amount',
 
 
 class PaymentDiscountModelSerializer(ModelSerializer):
     class Meta:
         model = PaymentDiscount
-        fields = 'plan', 'discount_percent', 'updated_at',
+        fields = 'id', 'plan', 'discount_percent', 'updated_at',
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)

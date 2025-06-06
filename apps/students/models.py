@@ -1,6 +1,8 @@
+from decimal import Decimal
+
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, BooleanField, Model, JSONField, OneToOneField, CASCADE, \
-    DateField, TextField, ForeignKey, ImageField
+    DateField, TextField, ForeignKey, ImageField, DecimalField
 from django.db.models import Model
 from django.utils import timezone
 
@@ -136,7 +138,7 @@ class PaymentPlan(Model):
         ('6months', '6 oylik'),
         ('12months', '1 yillik')
     ])
-    base_amount = CharField(max_length=20)  # misol: 2400000
+    base_amount = DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
         return f"{self.get_name_display()} - {self.base_amount} so‘m"
@@ -157,7 +159,7 @@ class PaymentDiscount(Model):
 
 class StudentPayment(Model):
     student = ForeignKey('students.Student', CASCADE, related_name='payments')
-    plan = ForeignKey(PaymentPlan, CASCADE)
+    plan = ForeignKey('students.PaymentPlan', CASCADE)
     paid_amount = CharField(max_length=20)
     due_date = DateField()
     is_paid = BooleanField(default=False)
@@ -166,6 +168,38 @@ class StudentPayment(Model):
 
     def __str__(self):
         return f"{self.student.user.full_name()} - {self.plan.name} - {self.paid_amount} - {'To‘langan' if self.is_paid else 'Qarzdor'}"
+
+    @property
+    def payment_status(self):
+        plan_amount = self.plan.base_amount
+        paid = self.paid_amount or Decimal('0.00')
+
+        if paid == Decimal('0.00'):
+            return "To‘lanmagan"
+        elif plan_amount == paid:
+            return "To‘langan"
+        else:
+            debt = plan_amount - paid
+            return f"Qarzdor: {debt:,.2f} so‘m"
+
+
+    # todo base_amount agar str da kelsa
+    # @property
+    # def payment_status(self):
+    #     try:
+    #         plan_amount = Decimal(self.plan.base_amount.replace(',', '').strip())  # base_amount string => Decimal
+    #         paid = Decimal(self.paid_amount.replace(',', '').strip()) if self.paid_amount else Decimal('0.00')
+    #
+    #         if paid == Decimal('0.00'):
+    #             return "To‘lanmagan"
+    #         elif plan_amount - paid == Decimal('0.00'):
+    #             return "To‘langan"
+    #         else:
+    #             debt = plan_amount - paid
+    #             return f"Qarzdor: {debt:,.2f} so‘m"
+    #
+    #     except Exception as e:
+    #         return f"Xato: {e}"
 
     # @property
     # def total_debt(self):
