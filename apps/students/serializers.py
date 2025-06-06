@@ -76,7 +76,8 @@ class PaymentDiscountModelSerializer(ModelSerializer):
 class StudentPaymentModelSerializer(ModelSerializer):
     class Meta:
         model = StudentPayment
-        fields = 'id', 'student', 'plan', 'paid_amount', 'due_date', 'is_paid', 'paid_at', 'payment_note',
+        fields = ('id', 'student', 'plan', 'paid_amount', 'due_date', 'is_paid', 'paid_at', 'payment_note',
+                  'payment_status',)
 
     def to_representation(self, instance):
         repr = super().to_representation(instance)
