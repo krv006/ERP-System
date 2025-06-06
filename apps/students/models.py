@@ -160,7 +160,7 @@ class PaymentDiscount(Model):
 class StudentPayment(Model):
     student = ForeignKey('students.Student', CASCADE, related_name='payments')
     plan = ForeignKey('students.PaymentPlan', CASCADE)
-    paid_amount = CharField(max_length=20)
+    paid_amount = DecimalField(max_digits=12, decimal_places=2)
     due_date = DateField()
     is_paid = BooleanField(default=False)
     paid_at = DateField(null=True, blank=True)
