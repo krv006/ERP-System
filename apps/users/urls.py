@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import UserListAPIView, UserRegisterCreateView, LoginAPIView, UserRoleUpdateAPIView, \
-    UserDetailListAPIView
+    UserDetailListAPIView, VerifyCodeApiView
 
 urlpatterns = [
     # todo USER
@@ -11,5 +11,6 @@ urlpatterns = [
 
     # todo Login-Register
     path('user-register/', UserRegisterCreateView.as_view(), name='register'),
+    path('verify-code', VerifyCodeApiView.as_view(), name='verify_code'),
     path('user-login/', LoginAPIView.as_view(), name='login'),
 ]

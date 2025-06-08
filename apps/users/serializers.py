@@ -59,6 +59,25 @@ class LoginUserModelSerializer(Serializer):
         return attrs
 
 
+class VerifyCodeSerializer(Serializer):
+    email = EmailField()
+    code = CharField(write_only=True)
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        email = attrs.get('email')
+        code = attrs.pop('code')
+        gen_code = cache.get(f'{email}_verification')
+        if gen_code is None:
+            raise ValidationError("Your verification already expired!")
+        if code != gen_code:
+            raise ValidationError("Code didn't matched")
+        user = User.objects.get(email=email)
+        user.is_active = True
+        user.save()
+        return user
+
+
 class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
