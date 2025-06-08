@@ -1,9 +1,12 @@
 from django.contrib.auth.hashers import make_password
+from django.core.cache import cache
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CharField, EmailField
 from rest_framework.serializers import ModelSerializer, Serializer
 
+from users.gen_code import generate_code
 from users.models import User
+from users.task import send_verification_email
 
 
 class RegisterUserModelSerializer(ModelSerializer):
@@ -19,12 +22,20 @@ class RegisterUserModelSerializer(ModelSerializer):
 
     def validate(self, attrs):
         confirm_password = attrs.pop('confirm_password')
-        if confirm_password != attrs.get('password'):
+        password = attrs.get('password')
+        if confirm_password != password:
             raise ValidationError('Passwords did not match!')
-        attrs['password'] = make_password(confirm_password)
+        attrs['password'] = make_password(password)
         if not attrs.get('username'):
             attrs['username'] = attrs.get('email')
         return attrs
+
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        code = generate_code()
+        cache.set(f"{user.email}_verification", code, timeout=120)
+        send_verification_email.delay(user.email, code)
+        return user
 
 
 class LoginUserModelSerializer(Serializer):
