@@ -11,14 +11,18 @@ from users.serializers import RegisterUserModelSerializer, LoginUserModelSeriali
     UserRoleUpdateModelSerializer, UserDetailModelSerializer, VerifyCodeSerializer
 
 
-@extend_schema(tags=['user'])
+@extend_schema(tags=['Auth'], description="""
+API for verify code
+""")
 class UserRegisterCreateView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterUserModelSerializer
     permission_classes = AllowAny,
 
 
-@extend_schema(tags=['user'])
+@extend_schema(tags=['Auth'], description="""
+API for verify code
+""")
 class LoginAPIView(GenericAPIView):
     serializer_class = LoginUserModelSerializer
     permission_classes = AllowAny,
