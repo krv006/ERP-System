@@ -1,1 +1,3 @@
 celery -A root worker -l INFO
+
+celery -A root worker -l info --pool=solo

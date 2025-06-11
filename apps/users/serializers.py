@@ -38,7 +38,7 @@ class RegisterUserModelSerializer(ModelSerializer):
         return user
 
 
-class LoginUserModelSerializer(Serializer):
+class LoginUserModelSerializer(ModelSerializer):
     email = EmailField()
     password = CharField(write_only=True)
 

@@ -67,8 +67,10 @@ API for verify code
 """)
 class VerifyCodeApiView(GenericAPIView):
     serializer_class = VerifyCodeSerializer
+    queryset = User.objects.all()
+    permission_classes = AllowAny,
 
     def post(self, request, *args, **kwargs):
-        serialize = self.get_serializer(data=request.data)
-        serialize.is_valid(raise_exception=True)
-        return Response({"Successfully verified code!"}, status=HTTP_200_OK)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({"message": "Successfully verified code!"}, status=HTTP_200_OK)

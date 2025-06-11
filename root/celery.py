@@ -8,7 +8,7 @@ app = Celery('root')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-app.autodiscover_tasks()
+app.autodiscover_tasks(['users'])
 
 
 @app.task(bind=True, ignore_result=True)
