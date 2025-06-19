@@ -26,7 +26,7 @@ class Student(Model):
     # Basic info
     user = OneToOneField('users.User', CASCADE, related_name='student_profile')
     photo = ImageField(blank=True, null=True)
-    address = ForeignKey(Address, CASCADE, related_name='students')
+    address = ForeignKey('students.Address', CASCADE, related_name='students')
 
     # Family info
     father_name = CharField(max_length=100)
@@ -181,7 +181,6 @@ class StudentPayment(Model):
         else:
             debt = plan_amount - paid
             return f"Qarzdor: {debt:,.2f} so‘m"
-
 
     # todo base_amount agar str da kelsa
     # @property
